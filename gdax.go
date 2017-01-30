@@ -16,6 +16,7 @@ type Gdax struct {
 	Currency   string
 	Output     chan float64
 	FeedsCount chan int
+	Side       string
 }
 
 type subscribeMessage struct {
@@ -27,6 +28,7 @@ type response struct {
 	Type      string `json:"type"`
 	Price     string `json:"price"`
 	ProductId string `json:"product_id"`
+	Side      string `json:"side"`
 }
 
 func (feed *Gdax) Subscribe() {
@@ -40,6 +42,9 @@ func (feed *Gdax) Subscribe() {
 		OnMessage: func(msg []byte, w *Conn) {
 			res := &response{}
 			if err := json.Unmarshal(msg, res); err != nil {
+				return
+			}
+			if res.Side != feed.Side {
 				return
 			}
 			f, err := strconv.ParseFloat(res.Price, 64)

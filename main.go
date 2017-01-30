@@ -10,14 +10,14 @@ func main() {
 
 	ticker.SetFeeds([]BitcoinFeed{
 		// emulating three different BTC-USD feeds
-		&Gdax{Currency: "BTC-USD", Output: ticker.BtcUsd, FeedsCount: ticker.UsdActiveFeedsCount},
-		&Gdax{Currency: "BTC-USD", Output: ticker.BtcUsd, FeedsCount: ticker.UsdActiveFeedsCount},
-		&Gdax{Currency: "BTC-USD", Output: ticker.BtcUsd, FeedsCount: ticker.UsdActiveFeedsCount},
+		&Gdax{Currency: "BTC-USD", Output: ticker.BtcUsd, FeedsCount: ticker.UsdActiveFeedsCount, Side: "buy"},
+		&Gdax{Currency: "BTC-USD", Output: ticker.BtcUsd, FeedsCount: ticker.UsdActiveFeedsCount, Side: "buy"},
+		&Gdax{Currency: "BTC-USD", Output: ticker.BtcUsd, FeedsCount: ticker.UsdActiveFeedsCount, Side: "buy"},
 		// emulating four different BTC-EUR feeds
-		&Gdax{Currency: "BTC-EUR", Output: ticker.BtcEur, FeedsCount: ticker.EurActiveFeedsCount},
-		&Gdax{Currency: "BTC-EUR", Output: ticker.BtcEur, FeedsCount: ticker.EurActiveFeedsCount},
-		&Gdax{Currency: "BTC-EUR", Output: ticker.BtcEur, FeedsCount: ticker.EurActiveFeedsCount},
-		&Gdax{Currency: "BTC-EUR", Output: ticker.BtcEur, FeedsCount: ticker.EurActiveFeedsCount},
+		&Gdax{Currency: "BTC-EUR", Output: ticker.BtcEur, FeedsCount: ticker.EurActiveFeedsCount, Side: "buy"},
+		&Gdax{Currency: "BTC-EUR", Output: ticker.BtcEur, FeedsCount: ticker.EurActiveFeedsCount, Side: "buy"},
+		&Gdax{Currency: "BTC-EUR", Output: ticker.BtcEur, FeedsCount: ticker.EurActiveFeedsCount, Side: "buy"},
+		&Gdax{Currency: "BTC-EUR", Output: ticker.BtcEur, FeedsCount: ticker.EurActiveFeedsCount, Side: "buy"},
 	})
 
 	for _, feed := range ticker.Feeds {
