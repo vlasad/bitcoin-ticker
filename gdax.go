@@ -5,11 +5,6 @@ import (
 	"strconv"
 )
 
-type BitcoinFeed interface {
-	Subscribe()
-	GetCurrency() string
-}
-
 var gdaxUrl = "wss://ws-feed.gdax.com"
 
 type Gdax struct {
@@ -19,12 +14,12 @@ type Gdax struct {
 	Side       string
 }
 
-type subscribeMessage struct {
+type gdaxSubscribeMessage struct {
 	Type       string   `json:"type"`
 	ProductIds []string `json:"product_ids"`
 }
 
-type response struct {
+type gdaxResponse struct {
 	Type      string `json:"type"`
 	Price     string `json:"price"`
 	ProductId string `json:"product_id"`
@@ -35,12 +30,12 @@ func (feed *Gdax) Subscribe() {
 	c := Conn{
 		OnConnected: func(w *Conn) {
 			feed.FeedsCount <- 1
-			msg := subscribeMessage{"subscribe", []string{feed.Currency}}
+			msg := gdaxSubscribeMessage{"subscribe", []string{feed.GetCurrency()}}
 			msgBytes, _ := json.Marshal(msg)
 			w.Send(msgBytes)
 		},
 		OnMessage: func(msg []byte, w *Conn) {
-			res := &response{}
+			res := &gdaxResponse{}
 			if err := json.Unmarshal(msg, res); err != nil {
 				return
 			}

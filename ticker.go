@@ -24,6 +24,8 @@ func (t *Ticker) Print() {
 		case x := <-t.EurActiveFeedsCount:
 			_eurSourcesCount += x
 		case _btcusd = <-t.BtcUsd:
+			print("\033[H\033[2J")
+			fmt.Printf(format, _btcusd, _btcusd/_btceur, _btceur, _usdSourcesCount, t.UsdFeedsCount, _eurSourcesCount, t.EurFeedsCount)
 		case _btceur = <-t.BtcEur:
 			print("\033[H\033[2J")
 			fmt.Printf(format, _btcusd, _btcusd/_btceur, _btceur, _usdSourcesCount, t.UsdFeedsCount, _eurSourcesCount, t.EurFeedsCount)
@@ -34,7 +36,7 @@ func (t *Ticker) Print() {
 func (t *Ticker) CountUsdSources() {
 	t.UsdFeedsCount = 0
 	for _, feed := range t.Feeds {
-		if feed.GetCurrency() == "BTC-USD" {
+		if feed.GetCurrency() == btcusd {
 			t.UsdFeedsCount += 1
 		}
 	}
@@ -43,7 +45,7 @@ func (t *Ticker) CountUsdSources() {
 func (t *Ticker) CountEurSources() {
 	t.EurFeedsCount = 0
 	for _, feed := range t.Feeds {
-		if feed.GetCurrency() == "BTC-EUR" {
+		if feed.GetCurrency() == btceur {
 			t.EurFeedsCount += 1
 		}
 	}
