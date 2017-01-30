@@ -75,12 +75,7 @@ func (c *Conn) close() {
 		c.closed = true
 	}
 	if c.Reconnect {
-		for {
-			c.Dial(c.url, c.protocol)
-			if !c.closed {
-				break
-			}
-			time.Sleep(time.Second * 1)
-		}
+		time.Sleep(time.Second * 1)
+		c.Dial(c.url, c.protocol)
 	}
 }
